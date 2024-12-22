@@ -1,14 +1,16 @@
-const Course_detail = ({name, exercises}) => <li>{name} {exercises}</li>
+const Course_detail = ({name, exercises}) => <p>{name} {exercises}</p>
 
 const Course = (props) => {
   return (
     <>
     <h1>{props.course.name}</h1>
-    <ul>
+    <div>
       {props.course.parts.map(course =>
         <Course_detail key={course.id} name={course.name} exercises={course.exercises}/>
       )}
-    </ul>
+    </div>
+    <p><strong>total of {props.course.parts.reduce((accumulator, currentValue) => accumulator + currentValue.exercises,
+  0)} exercises</strong></p>
     </>
     
   )
