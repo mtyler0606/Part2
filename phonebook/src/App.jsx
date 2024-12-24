@@ -20,7 +20,18 @@ const App = () => {
   const submitHandler = (event) => {
     event.preventDefault()
     const newObj = {name: newName}
-    setPersons(persons.concat(newObj))
+    let containsName = false
+    for(let person of persons){
+      if(person.name == newName){
+        containsName = true
+      }
+    }
+    if(containsName){
+      alert(`${newName} is already added to phonebook`)
+    }
+    else {
+      setPersons(persons.concat(newObj))
+    }
     setNewName("")
   }
 
