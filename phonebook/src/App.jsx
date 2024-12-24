@@ -7,7 +7,7 @@ const logName = (event) => {
   console.log(event.target)
 }
 
-const Number = ({name}) => <p>{name}</p>
+const Number = ({name, number}) => <p>{name} {number}</p>
 
 
 const App = () => {
@@ -16,10 +16,11 @@ const App = () => {
     { name: 'Arto Hellas' }
   ]) 
   const [newName, setNewName] = useState('')
-
+  const [newNumber, setNumber] = useState('')
+  
   const submitHandler = (event) => {
     event.preventDefault()
-    const newObj = {name: newName}
+    const newObj = {name: newName, number: newNumber}
     let containsName = false
     for(let person of persons){
       if(person.name == newName){
@@ -33,6 +34,7 @@ const App = () => {
       setPersons(persons.concat(newObj))
     }
     setNewName("")
+    setNumber("")
   }
 
   return (
@@ -46,12 +48,18 @@ const App = () => {
                 />
         </div>
         <div>
+          number: <input
+                  value={newNumber}
+                  onChange={(event)=>{console.log(newNumber); setNumber(event.target.value)}}
+          />
+        </div>
+        <div>
           <button type="submit">add</button>
         </div>
       </form>
       <h2>Numbers</h2>
       <div>
-        {persons.map(person => <Number key={person.name} name={person.name} />)}
+        {persons.map(person => <Number key={person.name} name={person.name} number={person.number} />)}
       </div>
     </div>
   )
