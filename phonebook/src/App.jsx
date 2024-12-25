@@ -1,14 +1,6 @@
 import { useState } from 'react'
-
-
-
-const logName = (event) => {
-  event.preventDefault()
-  console.log(event.target)
-}
-
-const Number = ({name, number}) => <p>{name} {number}</p>
-
+import SubmissionForm from './Components/SubmissionForm'
+import Filtered from './Components/Filtered'
 
 const App = () => {
   const [persons, setPersons] = useState([
@@ -52,15 +44,6 @@ const App = () => {
     }
   }
 
-  const displayFiltered = () => {
-    if(!isFiltered){
-      return persons.map(person => <Number key={person.name} name={person.name} number={person.number} />)
-    }
-    else {
-      const filteredPersons = persons.filter((person) => person.name.toLowerCase().includes(filter.toLowerCase()))
-      return filteredPersons.map(person => <Number key={person.name} name={person.name} number={person.number} />)
-    }
-  }
 
   return (
     <div>
@@ -70,26 +53,10 @@ const App = () => {
         <input onChange={filterHandler} />
       </div>
       <h2>add a new</h2>
-      <form onSubmit={submitHandler}>
-        <div>
-          name: <input
-                  value={newName}
-                  onChange={(event)=>{setNewName(event.target.value)}}
-                />
-        </div>
-        <div>
-          number: <input
-                  value={newNumber}
-                  onChange={(event)=>{console.log(newNumber); setNumber(event.target.value)}}
-          />
-        </div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
+      <SubmissionForm submitHandler={submitHandler} newName={newName} newNumber={newNumber} setNewName={setNewName} setNumber={setNumber}/>
       <h2>Numbers</h2>
       <div>
-        {displayFiltered()}
+        <Filtered isFiltered={isFiltered} filter={filter} personsList={persons} />
       </div>
     </div>
   )
