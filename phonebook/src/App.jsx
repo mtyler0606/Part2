@@ -19,6 +19,7 @@ const App = () => {
   const submitHandler = (event) => {
     event.preventDefault()
     const newObj = {name: newName, number: newNumber}
+    /*
     let containsName = false
     for(let person of persons){
       if(person.name == newName){
@@ -31,8 +32,14 @@ const App = () => {
     else {
       setPersons(persons.concat(newObj))
     }
-    setNewName("")
-    setNumber("")
+      */
+    axios
+      .post('http://localhost:3001/persons', newObj)
+      .then(response => {setPersons(persons.concat(response.data))
+        setNewName("")
+        setNumber("") 
+  })
+    
   }
 
   const filterHandler = (event) => {
