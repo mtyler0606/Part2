@@ -18,14 +18,31 @@ const App = () => {
   
   const submitHandler = (event) => {
     event.preventDefault()
+    const filteredList = persons.filter(person => person.name === newName)
+    if(filteredList.length === 1){
+      if(window.confirm(`${newName} is already added to phonebook. Replace number with new number?`)){
+        const personToUpdate = persons.find(person => person.name === newName)
+        const updatedPerson = {...personToUpdate, number: newNumber}
+        const updatedList = persons.filter(person => person.name != newName)
+        personService
+          .updatePerson(personToUpdate.id, updatedPerson)
+          .then(response => setPersons(updatedList.concat(response.data)))
+        setNewName("")
+        setNumber("")
+      }
+    }
+
+    else {
     const newObj = {name: newName, number: newNumber}
 
     personService.addPerson(newObj).then(response => {setPersons(persons.concat(response.data))
       setNewName("")
-      setNumber("") 
-})
+      setNumber("")
+    } 
+)
     
   }
+}
 
   const filterHandler = (event) => {
     const newFilter = event.target.value;
