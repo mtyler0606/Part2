@@ -37,6 +37,16 @@ const App = () => {
     }
   }
 
+  const deletehandler = (id, name) => {
+    if(window.confirm(`delete ${name}?`)){
+      personService
+      .deletePerson(id)
+      .then(setPersons(persons.filter(person => person.id != id)))
+
+    }
+   
+  } 
+
 
   return (
     <div>
@@ -49,7 +59,7 @@ const App = () => {
       <SubmissionForm submitHandler={submitHandler} newName={newName} newNumber={newNumber} setNewName={setNewName} setNumber={setNumber}/>
       <h2>Numbers</h2>
       <div>
-        <Filtered isFiltered={isFiltered} filter={filter} personsList={persons} />
+        <Filtered isFiltered={isFiltered} filter={filter} personsList={persons}  deletehandler={deletehandler}/>
       </div>
     </div>
   )
