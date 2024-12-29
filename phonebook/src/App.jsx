@@ -12,6 +12,7 @@ const App = () => {
   const [filter, setFilter] = useState('')
   const [isFiltered, setIsFiltered ] = useState(false)
   const [message, setMessage] = useState('')
+  const [className, setClassName] = useState('')
 
   useEffect(() => {
     personService
@@ -30,9 +31,11 @@ const App = () => {
         personService
           .updatePerson(personToUpdate.id, updatedPerson)
           .then(response => {setPersons(updatedList.concat(response.data))
+            setClassName('confirmation')
             setMessage(`Updated ${updatedPerson.name}`)
             setTimeout(() => {
                   setMessage(null)
+                  setClassName(null)
                   }, 5000)
           })
         setNewName("")
@@ -44,9 +47,11 @@ const App = () => {
     const newObj = {name: newName, number: newNumber}
 
     personService.addPerson(newObj).then(response => {setPersons(persons.concat(response.data))
+      setClassName('confirmation')
       setMessage(`Added ${newObj.name}`)
       setTimeout(() => {
             setMessage(null)
+            setClassName(null)
             }, 5000)
       setNewName("")
       setNumber("")
@@ -71,6 +76,12 @@ const App = () => {
       personService
       .deletePerson(id)
       .then(setPersons(persons.filter(person => person.id != id)))
+      .catch(error => {setClassName('error')
+        setMessage(`${name} has already been deleted from the server`)
+        setTimeout(() => {
+              setMessage(null)
+              setClassName(null)
+              }, 5000)})
 
     }
    
@@ -80,7 +91,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <Notification message={message} />
+      <Notification message={message} className={className} />
       <div>
         filter show with
         <input onChange={filterHandler} />
