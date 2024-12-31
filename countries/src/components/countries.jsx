@@ -1,11 +1,11 @@
-const Countries = ({countryList}) => {
+const Countries = ({countryList, showHandler}) => {
  if(countryList.length > 10){
   return (<p>Too Many Matches</p>)
  }
  else if (countryList.length > 1){
   return (countryList.map((country, index) => (
     <div key={index}>
-      <span>{country.name.common}</span>
+      <span>{country.name.common}</span><button onClick={() => showHandler(country.name.common)}>show</button>
     </div>
 )))
  }

@@ -24,13 +24,17 @@ const App = () => {
       setfilteredList(allCountries)
     }
   }
+
+  const showHandler = (countryName) => {
+    setfilteredList(allCountries.filter(country => country.name.common === countryName))
+  }
   
   return (
     <>
       <div>
         <span>find countries </span>
         <input type="text" onChange={inputHandler}/>
-        <Countries countryList={filteredList} />
+        <Countries countryList={filteredList} showHandler={showHandler}/>
       </div>
       
     </>
